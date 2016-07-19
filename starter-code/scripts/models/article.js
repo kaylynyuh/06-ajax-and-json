@@ -45,20 +45,24 @@ Article.loadAll = function(dataWePassIn) {
 
 Article.fetchAll = function() {
   if (localStorage.hackerIpsum) {
+    // console.log(localStorage.hackerIpsum);
     /* When our data is already in localStorage:
     1. We can process it (sort and instantiate),
     2. Then we can render the index page. */
     // Article.loadAll(// TODO: DONE Invoke with our localStorage! Should we parse or stringify this?);
     // TODO: DONE Now let's render the index page.
     Article.loadAll(JSON.parse(localStorage.hackerIpsum));
+    articleView.renderIndexPage();
   } else {
-    // Load our json data
+    // ELSE, if the data is not in LS, Load our json data
     $.ajax({
       type: 'GET',
       url: '/data/hackerIpsum.json'
     }).done(function(data) {
       // Store that data in localStorage so we can skip the server call next time
       localStorage.hackerIpsum = JSON.stringify(data);
+      Article.loadAll(data);
+      articleView.renderIndexPage();
     });
 
 
@@ -73,10 +77,8 @@ Article.fetchAll = function() {
 };
 
 //rendering to the index page
-Article.fetchAll();
-Article.all.forEach(function(generateNewArticles) {
-  $('#articles').append(generateNewArticles.toHtml('#article-template'));
-});
+
+
 
 
 
