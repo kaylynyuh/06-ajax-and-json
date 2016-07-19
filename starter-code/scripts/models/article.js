@@ -72,7 +72,7 @@ Article.fetchAll = function() {
   }
 };
 
-
+//rendering to the index page
 Article.fetchAll();
 Article.all.forEach(function(generateNewArticles) {
   $('#articles').append(generateNewArticles.toHtml('#article-template'));
